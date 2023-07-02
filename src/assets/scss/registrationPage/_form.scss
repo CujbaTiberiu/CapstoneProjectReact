@@ -1,0 +1,101 @@
+$color1: #0033cc;
+$color2: white;
+$color3: rgba(24, 20, 20, 0.987);
+
+.login-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+  padding: 40px;
+  background: white;
+  box-sizing: border-box;
+  box-shadow: 0 15px 25px $color3;
+  border-radius: 10px;
+}
+
+.login-box .user-box {
+  position: relative;
+}
+
+.title__reg {
+  color: $color1;
+}
+
+.login-box .user-box input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: $color3;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid $color3;
+  outline: none;
+  background: transparent;
+}
+
+.login-box .user-box label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  color: $color3;
+  pointer-events: none;
+  transition: .5s;
+}
+
+.login-box .user-box input:focus~label,
+.login-box .user-box input:valid~label {
+  top: -20px;
+  left: 0;
+  color: $color1;
+  font-size: 12px;
+}
+
+.login-box form a {
+  display: inline-block;
+  padding: 10px 20px;
+  color: $color3;
+  font-size: 12px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: .5s;
+  margin-top: 10px;
+  letter-spacing: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-box a:hover {
+  background: $color1;
+  color: $color3;
+  border-radius: 5px;
+  box-shadow: 0 0 5px $color1, 0 0 25px $color1, 0 0 50px $color1, 0 0 100px $color1;
+}
+
+.login-box a span {
+  position: absolute;
+  display: block;
+}
+
+@keyframes btn-anim1 {
+  0% {
+    left: -100%;
+  }
+
+  50%,
+  100% {
+    left: 100%;
+  }
+}
+
+.login-box form a span:nth-child(1) {
+  bottom: 2px;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, $color1);
+  animation: btn-anim1 2s linear infinite;
+}
