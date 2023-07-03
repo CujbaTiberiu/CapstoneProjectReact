@@ -1,22 +1,22 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Spinner,
-  ListGroup,
-} from "react-bootstrap";
-import Home from "./Home";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Container, Row, Col, Spinner } from "react-bootstrap";
 import logimg from "../assets/imgs/sigin.svg";
+import { useLocalStorage } from "react-use";
+import Particle from "../components/Particle";
 
 const Login = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [responseText, setResponseText] = useState("");
+
+  const navigate = useNavigate();
+  const [token, setToken] = useLocalStorage("APY_KEY", "");
+  const [user, setUser] = useLocalStorage("user", "");
+  const [tokenType, setTokenType] = useLocalStorage("tokenType", "");
 
   const handleUserNameChange = (event) => {
     setUserName(event.target.value);
@@ -48,7 +48,9 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         console.log(data);
-        setResponseText(data);
+        setToken(data.accessToken);
+        setUser(data.username);
+        setTokenType(data.tokenType);
       } else {
         console.log("Error occurred with the request");
         alert("Username or password wrong!");
@@ -61,62 +63,76 @@ const Login = () => {
     setLoading(false);
   };
 
+  useEffect(() => {
+    if (token) {
+      navigate("/home");
+    }
+  }, [token, navigate]);
+
   return (
-    <Container className="py-5 mt-5">
-      {loading ? (
-        <Row>
-          <Col className="mx-auto mb-4">
-            <Spinner animation="border" variant="primary" size="lg" />
-          </Col>
-        </Row>
-      ) : responseText ? (
-        <Home />
-      ) : (
-        <Row className="d-flex justify-content-center my-5 gy-2">
-          <Col xs={8} sm={10} md={6} lg={6} className="order-lg-1">
-            <div>
-              <img className="img-fluid my-3" src={logimg} alt="pic"></img>
-            </div>
-          </Col>
-          <Col xs={10} md={6} lg={6} xl={4} xxl={4} className="mb-4 login-box">
-            <h1 className="title__reg d-flex justify-content-center">
-              ComuniCate
-            </h1>
-            <h3 className="my-3 d-flex justify-content-center">
-              Effettua il Login
-            </h3>
-            <form>
-              <div className="user-box">
-                <input
-                  type="text"
-                  name=""
-                  value={username}
-                  onChange={handleUserNameChange}
-                  required
-                />
-                <label>Username</label>
+    <>
+      <Particle />
+      <Container className="py-5 mt-5">
+        {loading ? (
+          <Row>
+            <Col className="d-flex justify-content-center align-items-center my-5">
+              <Spinner animation="border" variant="primary" size="lg" />
+            </Col>
+          </Row>
+        ) : (
+          <Row className="d-flex justify-content-center my-5 gy-2">
+            <Col xs={8} sm={10} md={6} lg={6} className="order-lg-1">
+              <div>
+                <img className="img-fluid my-3" src={logimg} alt="pic"></img>
               </div>
-              <div className="user-box">
-                <input
-                  type="password"
-                  name=""
-                  value={password}
-                  onChange={handlePasswordChange}
-                  required
-                />
-                <label>Password</label>
-              </div>
-              <center>
-                <a className="color-white" onClick={handleSubmit}>
-                  LOGIN
-                  <span></span>
-                </a>
-              </center>
-            </form>
-          </Col>
-        </Row>
-      )}
-    </Container>
+            </Col>
+            <Col
+              xs={10}
+              md={6}
+              lg={6}
+              xl={4}
+              xxl={4}
+              className="mb-4 login-box"
+            >
+              <h1 className="title__reg d-flex justify-content-center">
+                ComuniCate
+              </h1>
+              <h3 className="my-3 d-flex justify-content-center">
+                Effettua il Login
+              </h3>
+              <form>
+                <div className="user-box">
+                  <input
+                    type="text"
+                    name=""
+                    value={username}
+                    onChange={handleUserNameChange}
+                    required
+                  />
+                  <label>Username</label>
+                </div>
+                <div className="user-box">
+                  <input
+                    type="password"
+                    name=""
+                    value={password}
+                    onChange={handlePasswordChange}
+                    required
+                  />
+                  <label>Password</label>
+                </div>
+                <center>
+                  <a className="color-white" onClick={handleSubmit}>
+                    LOGIN
+                    <span></span>
+                  </a>
+                </center>
+              </form>
+            </Col>
+          </Row>
+        )}
+      </Container>
+    </>
   );
 };
 

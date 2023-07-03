@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import WelcomeImg from "../assets/imgs/welcome.svg";
 import RegistrationCard from "./RegistrationCard";
+import Particle from "../components/Particle";
 
 const Registration = () => {
   const [name, setName] = useState("");
@@ -80,112 +81,116 @@ const Registration = () => {
   };
 
   return (
-    <Container className="my-5 flex-lg-column">
-      <Row className="d-flex justify-content-center align-items-center">
-        <Col xs={8} sm={10} md={6} lg={4} className="order-lg-1">
-          <div>
-            <img className="img-fluid my-3" src={WelcomeImg} alt="pic"></img>
-          </div>
-        </Col>
-        <Col
-          xs={10}
-          sm={10}
-          md={10}
-          lg={4}
-          className="order-lg-3 my-5 d-flex justify-content-around"
-        >
-          <RegistrationCard />
-        </Col>
-        <Col xs={10} lg={4} className="login-box order-lg-2">
-          <h3 className=" my-3 d-flex justify-content-center">Registrati</h3>
-          <form>
-            <div className="user-box">
-              <input
-                type="text"
-                name=""
-                value={name}
-                onChange={handleNameChange}
-                required
-              />
-              <label>Nome</label>
-            </div>
-            <div className="user-box">
-              <input
-                type="text"
-                name=""
-                value={lastName}
-                onChange={handleLastNameChange}
-                required
-              />
-              <label>Cognome</label>
-            </div>
-            <div className="user-box">
-              <input
-                type="text"
-                name=""
-                value={username}
-                onChange={handleUserNameChange}
-                required
-              />
-              <label>Username</label>
-            </div>
-            <div className="user-box">
-              <input
-                type="email"
-                name=""
-                value={email}
-                onChange={handleEmailChange}
-                required
-              />
-              <label>@Email</label>
-            </div>
-            <div className="user-box">
-              <input
-                type="password"
-                name=""
-                value={password}
-                onChange={handlePasswordChange}
-                required
-              />
-              <label>Password</label>
-            </div>
-            <div className="user-box">
-              <input
-                type="text"
-                name=""
-                value={taxCode}
-                onChange={handleTaxCodeChange}
-                required
-              />
-              <label>Codice Fiscale</label>
-            </div>
+    <>
+      <Particle />
 
-            {registrationCompleted ? (
-              <Link to="/login" className="nav-link">
+      <Container className="my-5 flex-lg-column">
+        <Row className="d-flex justify-content-center align-items-center">
+          <Col xs={8} sm={10} md={6} lg={4} className="order-lg-1">
+            <div>
+              <img className="img-fluid my-3" src={WelcomeImg} alt="pic"></img>
+            </div>
+          </Col>
+          <Col
+            xs={10}
+            sm={10}
+            md={10}
+            lg={4}
+            className="order-lg-3 my-5 d-flex justify-content-around"
+          >
+            <RegistrationCard />
+          </Col>
+          <Col xs={10} lg={4} className="login-box order-lg-2">
+            <h3 className=" my-3 d-flex justify-content-center">Registrati</h3>
+            <form>
+              <div className="user-box">
+                <input
+                  type="text"
+                  name=""
+                  value={name}
+                  onChange={handleNameChange}
+                  required
+                />
+                <label>Nome</label>
+              </div>
+              <div className="user-box">
+                <input
+                  type="text"
+                  name=""
+                  value={lastName}
+                  onChange={handleLastNameChange}
+                  required
+                />
+                <label>Cognome</label>
+              </div>
+              <div className="user-box">
+                <input
+                  type="text"
+                  name=""
+                  value={username}
+                  onChange={handleUserNameChange}
+                  required
+                />
+                <label>Username</label>
+              </div>
+              <div className="user-box">
+                <input
+                  type="email"
+                  name=""
+                  value={email}
+                  onChange={handleEmailChange}
+                  required
+                />
+                <label>@Email</label>
+              </div>
+              <div className="user-box">
+                <input
+                  type="password"
+                  name=""
+                  value={password}
+                  onChange={handlePasswordChange}
+                  required
+                />
+                <label>Password</label>
+              </div>
+              <div className="user-box">
+                <input
+                  type="text"
+                  name=""
+                  value={taxCode}
+                  onChange={handleTaxCodeChange}
+                  required
+                />
+                <label>Codice Fiscale</label>
+              </div>
+
+              {registrationCompleted ? (
+                <Link to="/login" className="nav-link">
+                  <center>
+                    <a className="text-black">
+                      Go to login page
+                      <span></span>
+                    </a>
+                  </center>
+                </Link>
+              ) : (
                 <center>
-                  <a className="text-black">
-                    Go to login page
+                  <a className="text-black" onClick={handleSubmit}>
+                    REGISTRATI
                     <span></span>
                   </a>
                 </center>
+              )}
+              <Link to="/login" className="nav-link">
+                <div className="text-secondary d-flex justify-content-center">
+                  Già registrato? Effettua il login!
+                </div>
               </Link>
-            ) : (
-              <center>
-                <a className="text-black" onClick={handleSubmit}>
-                  REGISTRATI
-                  <span></span>
-                </a>
-              </center>
-            )}
-            <Link to="/login" className="nav-link">
-              <div className="text-secondary d-flex justify-content-center">
-                Già registrato? Effettua il login!
-              </div>
-            </Link>
-          </form>
-        </Col>
-      </Row>
-    </Container>
+            </form>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 
