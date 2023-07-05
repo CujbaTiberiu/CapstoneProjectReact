@@ -14,9 +14,6 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-  const [token, setToken] = useLocalStorage("APY_KEY", "");
-  const [user, setUser] = useLocalStorage("user", "");
-  const [tokenType, setTokenType] = useLocalStorage("tokenType", "");
 
   const handleUserNameChange = (event) => {
     setUserName(event.target.value);
@@ -48,9 +45,10 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         console.log(data);
-        setToken(data.accessToken);
-        setUser(data.username);
-        setTokenType(data.tokenType);
+        localStorage.setItem("API_KEY", data.accessToken);
+        localStorage.setItem("user", data.username);
+        localStorage.setItem("tokenType", data.tokenType);
+        localStorage.setItem("role", data.role);
       } else {
         console.log("Error occurred with the request");
         alert("Username or password wrong!");
@@ -62,6 +60,7 @@ const Login = () => {
 
     setLoading(false);
   };
+  let token = localStorage.getItem("API_KEY");
 
   useEffect(() => {
     if (token) {

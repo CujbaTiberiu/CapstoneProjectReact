@@ -25,7 +25,7 @@ const MyNavbar = () => {
           className="bg-body-tertiary mb-3 fixed-top shadow"
         >
           <Container fluid>
-            <Navbar.Brand href="#">ComuniCate</Navbar.Brand>
+            <Navbar.Brand href="/home">ComuniCate</Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${expand}`}
@@ -39,20 +39,23 @@ const MyNavbar = () => {
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link>
-                    <Link
-                      to="/home"
-                      className="text-decoration-none text-primary"
-                    >
-                      <BiHomeSmile />
-                      Home
-                    </Link>
-                  </Nav.Link>
-                  <Nav.Link href="#action2">
-                    <MdOutgoingMail /> Segnalazioni
-                  </Nav.Link>
-                  <Nav.Link href="#action2" onClick={handleLogOut}>
-                    <MdLogout /> Logout
+                  <Link
+                    to="/home"
+                    className="text-decoration-none text-primary nav-link d-flex align-items-center"
+                  >
+                    <BiHomeSmile className="fs-3" /> Home
+                  </Link>
+                  <Link
+                    to="/report"
+                    className="text-decoration-none text-info nav-link d-flex align-items-center"
+                  >
+                    <MdOutgoingMail className="fs-3" /> Segnalazioni
+                  </Link>
+                  <Nav.Link
+                    onClick={handleLogOut}
+                    className="d-flex align-items-center"
+                  >
+                    <MdLogout className="fs-3" /> Logout
                   </Nav.Link>
                 </Nav>
               </Offcanvas.Body>
