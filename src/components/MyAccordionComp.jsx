@@ -1,12 +1,30 @@
-import { Container, Row, Col } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  OverlayTrigger,
+  Popover,
+} from "react-bootstrap";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 
-const MyAccordionComp = ({ report }) => {
+const MyAccordionComp = ({ report, deleteReport, index }) => {
+  const popover = (
+    <Popover id="confirm-delete">
+      <Popover.Header as="h3">Sei sicuro?</Popover.Header>
+      <Popover.Body>
+        <Button variant="danger" onClick={() => deleteReport(report.id)}>
+          Si
+        </Button>
+      </Popover.Body>
+    </Popover>
+  );
+
   return (
     <Accordion className="my-2">
       <Accordion.Item eventKey="0">
-        <Accordion.Header>Segnalazione numero {report.id}</Accordion.Header>
+        <Accordion.Header>Segnalazione numero {index + 1}</Accordion.Header>
         <Container>
           <Accordion.Body>
             <p>Tipo Segnalazione - {report.reportType}</p>
@@ -29,6 +47,11 @@ const MyAccordionComp = ({ report }) => {
                 </Col>
               ))}
             </Row>
+            <OverlayTrigger trigger="click" placement="right" overlay={popover}>
+              <Button variant="outline-danger" className="my-2">
+                Cancella
+              </Button>
+            </OverlayTrigger>
           </Accordion.Body>
         </Container>
       </Accordion.Item>

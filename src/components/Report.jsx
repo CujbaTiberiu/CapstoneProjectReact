@@ -21,7 +21,7 @@ const Report = () => {
     try {
       const config = {
         headers: {
-          Authorization: `Bearer ${userData.accessToken}`, //eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0LnVzZXJAbWFpbC5jb20iLCJpYXQiOjE2ODg1NDM4MjgsImV4cCI6MTY4OTQwNzgyOH0.4f2PZIn4Sn0QKwIoSW7S23NLelWTDld7fjHzrH5uwiaBWK9OSeJbFiDBKqWcsB7D`,
+          Authorization: `Bearer ${userData.accessToken}`,
         },
       };
       const response = await axios.get(
@@ -31,13 +31,35 @@ const Report = () => {
       console.log(response);
       setReports(response.data);
     } catch (error) {
-      console.log("nada");
+      console.log("Error in get all reports!");
+      console.error(error);
+    }
+  }
+
+  async function deleteReport(reportId) {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userData.accessToken}`,
+        },
+      };
+      const response = await axios.delete(
+        `http://localhost:8080/api/report/${reportId}`,
+        config
+      );
+      console.log(response);
+      alert("Segnalazione cancellata con successo!");
+      getReports();
+    } catch (error) {
+      alert("Errore nella cancellazione!");
+      console.log("Error in deleting report!");
       console.error(error);
     }
   }
 
   useEffect(() => {
     getReports();
+    //deleteReport();
   }, []);
 
   return (
@@ -47,8 +69,13 @@ const Report = () => {
         <Row>
           <Col className="my-5">
             <h2 className="text-center mb-4">Le tue Segnalazioni</h2>
-            {reports?.map((report, i) => (
-              <MyAccordionComp key={report.id} report={report} />
+            {reports?.map((report, index) => (
+              <MyAccordionComp
+                key={report.id}
+                report={report}
+                index={index}
+                deleteReport={deleteReport}
+              />
             ))}
           </Col>
         </Row>

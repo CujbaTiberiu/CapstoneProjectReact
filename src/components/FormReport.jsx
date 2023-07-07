@@ -215,7 +215,7 @@ const FormReport = () => {
                 onChange={handleChange}
                 required
               >
-                <option value="">Select report type</option>
+                <option value="">Seleziona il tipo d segnalazione</option>
                 {reportTypes.map((type, index) => (
                   <option key={index} value={type}>
                     {type}
@@ -225,7 +225,7 @@ const FormReport = () => {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label htmlFor="description" className="title__reg">
-                Description
+                Descrivi il problema
               </Form.Label>
               <Form.Control
                 as="textarea"
