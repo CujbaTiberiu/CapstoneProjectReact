@@ -70,6 +70,7 @@ const Registration = () => {
         setUserName("");
         setTaxCode("");
         setRegistrationCompleted(true);
+        alert("Registrato con successo!");
       } else {
         console.log("Error occurred with the request");
         alert("All rows are required!");
@@ -82,8 +83,9 @@ const Registration = () => {
 
   return (
     <>
-      <Particle />
-
+      <div className="particle__back">
+        <Particle />
+      </div>
       <Container className="my-5 flex-lg-column">
         <Row className="d-flex justify-content-center align-items-center">
           <Col xs={8} sm={10} md={6} lg={4} className="order-lg-1">
@@ -165,14 +167,14 @@ const Registration = () => {
               </div>
 
               {registrationCompleted ? (
-                <Link to="/login" className="nav-link">
-                  <center>
+                <center>
+                  <Link to="/login" className="nav-link">
                     <a className="text-black">
-                      Go to login page
+                      Vai al Login
                       <span></span>
                     </a>
-                  </center>
-                </Link>
+                  </Link>
+                </center>
               ) : (
                 <center>
                   <a className="text-black" onClick={handleSubmit}>

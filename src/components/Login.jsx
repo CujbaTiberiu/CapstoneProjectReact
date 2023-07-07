@@ -70,7 +70,9 @@ const Login = () => {
 
   return (
     <>
-      <Particle />
+      <div className="particle__back">
+        <Particle />
+      </div>
       <Container className="py-5 mt-5">
         {loading ? (
           <Row>

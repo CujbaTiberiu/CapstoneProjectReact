@@ -7,6 +7,7 @@ import { MdOutgoingMail } from "react-icons/md";
 import { BiHomeSmile } from "react-icons/bi";
 import { MdLogout } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/imgs/logo.png";
 
 const MyNavbar = () => {
   const navigate = useNavigate();
@@ -25,7 +26,10 @@ const MyNavbar = () => {
           className="bg-body-tertiary mb-3 fixed-top shadow"
         >
           <Container fluid>
-            <Navbar.Brand href="/home">ComuniCate</Navbar.Brand>
+            <Navbar.Brand href="/home">
+              <img src={logo} alt="" style={{ width: "50px" }} />
+              ComuniCate
+            </Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${expand}`}
