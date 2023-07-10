@@ -1,7 +1,7 @@
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 
-function Particle() {
+const Particle = () => {
   const particlesInit = async (main) => {
     console.log(main);
 
@@ -129,6 +129,6 @@ function Particle() {
       }}
     />
   );
-}
+};
 
 export default Particle;

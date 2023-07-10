@@ -4,8 +4,8 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Container, Row, Col } from "react-bootstrap";
 import axios from "axios";
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import { FcStackOfPhotos } from "react-icons/fc";
+import Map from "./Map";
 
 const reportTypes = [
   "STRADA",
@@ -21,7 +21,7 @@ const reportTypes = [
   "ANIMALI",
 ];
 
-const FormReport = () => {
+const FormReport = ({ getReports }) => {
   const userData = {
     username: localStorage.getItem("user"),
     accessToken: localStorage.getItem("API_KEY"),
@@ -29,21 +29,10 @@ const FormReport = () => {
     role: localStorage.getItem("role"),
   };
 
-  //console.log(userData);
-
-  const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyClytQp1USp5keyCvaSk_V4h7vcThzE3UU", //process.env.REACT_APP_MAPS_API_KEY,
-  });
-
-  const [markerPosition, setMarkerPosition] = useState({
-    lat: 41.8719,
-    lng: 12.4774,
-  });
   const fileInputRef = useRef(null);
   const [photos, setPhotos] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const center = useMemo(() => ({ lat: 41.8719, lng: 12.4774 }), []);
-  //const [center, setCenter] = useState({ lat: 41.8719, lng: 12.4774 });
+
   const [report, setReport] = useState({
     reportType: "",
     description: "",
@@ -74,6 +63,14 @@ const FormReport = () => {
       ...report,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleMapClick = (latitude, longitude) => {
+    setReport((prevReport) => ({
+      ...prevReport,
+      latitude: latitude.toString(),
+      longitude: longitude.toString(),
+    }));
   };
 
   const updateReportPhotos = (photoArray) => {
@@ -156,44 +153,12 @@ const FormReport = () => {
       setPhotos([]);
       setSelectedFiles([]);
       alert("Segnalazione inviata con successo!");
+      getReports();
     } catch (error) {
-      alert("Qualcosa è andato storto! Prova a fare un altra Segnalazione!");
+      alert("Inserisci una foto del problema che vuoi segnalare!");
       console.error(error);
     }
   };
-
-  function Map() {
-    const handleMapClick = (event) => {
-      const clickedLat = event.latLng.lat();
-      const clickedLng = event.latLng.lng();
-
-      setMarkerPosition({ lat: clickedLat, lng: clickedLng });
-      setReport((prevReport) => ({
-        ...prevReport,
-        latitude: clickedLat,
-        longitude: clickedLng,
-      }));
-    };
-
-    if (loadError) {
-      return <div>Error loading Google Maps</div>;
-    }
-
-    if (!isLoaded) {
-      return <div>Loading Google Maps...</div>;
-    }
-
-    return (
-      <GoogleMap
-        zoom={10}
-        mapContainerStyle={{ width: "100%", height: "40vh" }}
-        center={center}
-        onClick={handleMapClick}
-      >
-        <Marker position={markerPosition} />
-      </GoogleMap>
-    );
-  }
 
   return (
     <Container>
@@ -241,7 +206,7 @@ const FormReport = () => {
                 <Form.Label className="title__reg">
                   Scegli la posizione sulla mappa
                 </Form.Label>
-                <Map />
+                <Map onMapClick={handleMapClick} />
               </div>
             </Col>
             <Form.Group>
@@ -268,6 +233,9 @@ const FormReport = () => {
                 hidden
               />
             </Form.Group>
+            <Form.Label htmlFor="reportType" className="title__reg">
+              Inserisci almeno una foto del problema
+            </Form.Label>
             <Form.Group
               className="mb-3"
               onDrop={handleDrop}

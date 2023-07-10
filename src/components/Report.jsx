@@ -59,7 +59,6 @@ const Report = () => {
 
   useEffect(() => {
     getReports();
-    //deleteReport();
   }, []);
 
   return (
@@ -82,7 +81,7 @@ const Report = () => {
         <Row>
           <Col className="my-5">
             <h2 className="text-center mb-4">Fai una Segnalazione</h2>
-            <FormReport />
+            <FormReport getReports={getReports} />
           </Col>
         </Row>
       </Container>

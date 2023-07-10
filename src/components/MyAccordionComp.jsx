@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   Container,
   Row,
@@ -8,8 +9,30 @@ import {
 } from "react-bootstrap";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
+import axios from "axios";
 
 const MyAccordionComp = ({ report, deleteReport, index }) => {
+  const [address, setAddress] = useState("");
+
+  useEffect(() => {
+    const getAddress = async () => {
+      try {
+        const response = await axios.get(
+          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${report.latitude},${report.longitude}&key=AIzaSyClytQp1USp5keyCvaSk_V4h7vcThzE3UU`
+        );
+
+        if (response.data.results.length > 0) {
+          const formattedAddress = response.data.results[0].formatted_address;
+          setAddress(formattedAddress);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getAddress();
+  }, [report.latitude, report.longitude]);
+
   const popover = (
     <Popover id="confirm-delete">
       <Popover.Header as="h3">Sei sicuro?</Popover.Header>
@@ -30,6 +53,7 @@ const MyAccordionComp = ({ report, deleteReport, index }) => {
             <p>Tipo Segnalazione - {report.reportType}</p>
             <p>Descrizione - {report.description}</p>
             <p>Data - {report.date}</p>
+            <p>Indirizzo - {address}</p>
             <Row>
               <p>Foto:</p>
               {report?.photos.map((photo) => (
