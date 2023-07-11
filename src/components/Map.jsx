@@ -38,7 +38,7 @@ const Map = ({ onMapClick }) => {
       const { lat, lng } = selectedPlace.geometry.location;
       const address = selectedPlace.formatted_address;
       setSelectedLocation({ lat: lat(), lng: lng(), address });
-      handleMapClick({ latLng: { lat: () => lat, lng: () => lng } });
+      handleMapClick({ latLng: { lat: lat, lng: lng } });
       console.log("Selected Place:", address, lat(), lng());
       mapRef.current.panTo({ lat: lat(), lng: lng() });
       setMarkerPosition({ lat: lat(), lng: lng() });
