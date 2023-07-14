@@ -61,12 +61,14 @@ const Login = () => {
     setLoading(false);
   };
   let token = localStorage.getItem("API_KEY");
-
+  let userRole = localStorage.getItem("role");
   useEffect(() => {
-    if (token) {
+    if (token != null && userRole === "ROLE_USER") {
       navigate("/home");
+    } else if (token != null && userRole === "ROLE_ADMIN") {
+      navigate("/admin");
     }
-  }, [token, navigate]);
+  }, [token, userRole, navigate]);
 
   return (
     <>

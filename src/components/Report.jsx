@@ -12,6 +12,7 @@ const Report = () => {
     username: localStorage.getItem("user"),
     accessToken: localStorage.getItem("API_KEY"),
     tokenType: localStorage.getItem("tokenType"),
+    userRole: localStorage.getItem("role"),
   };
 
   console.log(userData.accessToken);
@@ -74,6 +75,7 @@ const Report = () => {
                 report={report}
                 index={index}
                 deleteReport={deleteReport}
+                role={userData.userRole}
               />
             ))}
           </Col>

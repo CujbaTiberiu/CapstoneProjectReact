@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Container, Row, Col } from "react-bootstrap";
@@ -149,6 +149,7 @@ const FormReport = ({ getReports }) => {
             imageData: "",
           },
         ],
+        username: userData.username,
       });
       setPhotos([]);
       setSelectedFiles([]);
@@ -162,9 +163,6 @@ const FormReport = ({ getReports }) => {
 
   return (
     <Container>
-      <Row>
-        <Col></Col>
-      </Row>
       <Row>
         <Col>
           <Form onSubmit={handleSubmit}>
