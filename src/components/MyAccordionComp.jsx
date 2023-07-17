@@ -141,7 +141,7 @@ const MyAccordionComp = ({
                     ))}
                   </Form.Control>
                 </Form.Group>
-                {/* <OverlayTrigger
+                <OverlayTrigger
                   trigger="click"
                   placement="right"
                   overlay={popoverModify}
@@ -149,7 +149,7 @@ const MyAccordionComp = ({
                   <Button variant="outline-primary" className="my-2">
                     Aggiorna Status
                   </Button>
-                </OverlayTrigger> */}
+                </OverlayTrigger>
               </div>
             )}
           </Accordion.Body>

@@ -51,7 +51,7 @@ const AdminNavbar = () => {
                     <TbUsersGroup className="fs-3" /> Utenti
                   </Link>
                   <Link
-                    to="/admin"
+                    to="/reports"
                     className="text-decoration-none text-info nav-link d-flex align-items-center"
                   >
                     <TbReportSearch className="fs-3" /> Segnalazioni
