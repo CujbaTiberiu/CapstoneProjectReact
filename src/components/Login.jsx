@@ -7,11 +7,24 @@ import { Container, Row, Col, Spinner } from "react-bootstrap";
 import logimg from "../assets/imgs/sigin.svg";
 import { useLocalStorage } from "react-use";
 import Particle from "../components/Particle";
+import { ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const notifyError = (text) =>
+    toast.error(`${text}!`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
 
   const navigate = useNavigate();
 
@@ -51,11 +64,11 @@ const Login = () => {
         localStorage.setItem("role", data.role);
       } else {
         console.log("Error occurred with the request");
-        alert("Username or password wrong!");
+        notifyError("Username o password errati!");
       }
     } catch (error) {
       console.log("Generic error occurred", error);
-      alert(error);
+      notifyError(error);
     }
 
     setLoading(false);
@@ -135,6 +148,7 @@ const Login = () => {
           </Row>
         )}
       </Container>
+      <ToastContainer />
     </>
   );
 };

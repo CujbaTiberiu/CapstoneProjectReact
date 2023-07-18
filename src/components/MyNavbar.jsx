@@ -11,6 +11,7 @@ import logo from "../assets/imgs/logo.png";
 
 const MyNavbar = () => {
   const navigate = useNavigate();
+  const username = localStorage.getItem("user");
 
   const handleLogOut = () => {
     localStorage.clear("API_KEY", "userName");
@@ -28,7 +29,8 @@ const MyNavbar = () => {
           <Container fluid>
             <Navbar.Brand href="/home">
               <img src={logo} alt="" style={{ width: "50px" }} />
-              ComuniCate
+              ComuniCate - Ciao{" "}
+              <span className="text-primary fs-4">{username}</span>!
             </Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas
@@ -38,7 +40,8 @@ const MyNavbar = () => {
             >
               <Offcanvas.Header closeButton>
                 <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-                  ComuniCate
+                  ComuniCate - Ciao{" "}
+                  <span className="text-primary fs-4">{username}</span>!
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>

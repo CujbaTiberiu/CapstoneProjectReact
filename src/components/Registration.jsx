@@ -1,10 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import WelcomeImg from "../assets/imgs/welcome.svg";
-import RegistrationCard from "./RegistrationCard";
+import { Container, Row, Col } from "react-bootstrap";
+import WelcomeImg from "../assets/imgs/register.svg";
 import Particle from "../components/Particle";
+import { ToastContainer, toast } from "react-toastify";
 
 const Registration = () => {
   const [name, setName] = useState("");
@@ -14,6 +14,43 @@ const Registration = () => {
   const [password, setPassword] = useState("");
   const [taxCode, setTaxCode] = useState("");
   const [registrationCompleted, setRegistrationCompleted] = useState(false);
+
+  //notify - allerts
+  const notifyError = (text) =>
+    toast.error(`${text}!`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
+  const notifySucces = (text) =>
+    toast.success(`${text}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
+  const notifyInfo = (text) =>
+    toast.info(`${text}`, {
+      position: "top-right",
+      autoClose: 6000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -70,10 +107,11 @@ const Registration = () => {
         setUserName("");
         setTaxCode("");
         setRegistrationCompleted(true);
-        alert("Registrato con successo!");
+        notifySucces("Registrato con successo!");
+        notifyInfo(`Clicca sul pulsante di Login`);
       } else {
         console.log("Error occurred with the request");
-        alert("All rows are required!");
+        notifyError("Compila tutti i campi correttamente!");
       }
     } catch (error) {
       console.log("Generic error occurred", error);
@@ -88,7 +126,7 @@ const Registration = () => {
       </div>
       <Container className="my-5 flex-lg-column">
         <Row className="d-flex justify-content-center align-items-center">
-          <Col xs={8} sm={10} md={6} lg={4} className="order-lg-1">
+          <Col xs={10} sm={10} md={10} lg={4} xl={4} className="order-lg-1">
             <div>
               <img className="img-fluid my-3" src={WelcomeImg} alt="pic"></img>
             </div>
@@ -98,12 +136,12 @@ const Registration = () => {
             sm={10}
             md={10}
             lg={4}
-            className="order-lg-3 my-5 d-flex justify-content-around"
+            xl={4}
+            className="login-box order-lg-3"
           >
-            <RegistrationCard />
-          </Col>
-          <Col xs={10} lg={4} className="login-box order-lg-2">
-            <h3 className=" my-3 d-flex justify-content-center">Registrati</h3>
+            <h3 className=" my-3 d-flex justify-content-center text-primary">
+              Registrati
+            </h3>
             <form>
               <div className="user-box">
                 <input
@@ -192,6 +230,7 @@ const Registration = () => {
           </Col>
         </Row>
       </Container>
+      <ToastContainer />
     </>
   );
 };

@@ -6,6 +6,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import { FcStackOfPhotos } from "react-icons/fc";
 import Map from "./Map";
+import { ToastContainer, toast } from "react-toastify";
 
 const reportTypes = [
   "STRADA",
@@ -47,6 +48,30 @@ const FormReport = ({ getReports }) => {
     ],
     username: "",
   });
+
+  const notifyWarning = (text) =>
+    toast.warning(`${text}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
+  const notifySucces = (text) =>
+    toast.success(`${text}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
 
   useEffect(() => {
     if (userData) {
@@ -120,6 +145,10 @@ const FormReport = ({ getReports }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (report.latitude === 41.8719 || report.longitude === 12.4774) {
+      notifyWarning("Seleziona o scrivi un indirizzo sulla mappa");
+      return;
+    }
     try {
       const formData = new FormData();
       formData.append("reportType", report.reportType);
@@ -153,146 +182,151 @@ const FormReport = ({ getReports }) => {
       });
       setPhotos([]);
       setSelectedFiles([]);
-      alert("Segnalazione inviata con successo!");
+      notifySucces("Segnalazione inviata con successo!");
       getReports();
     } catch (error) {
-      alert("Inserisci una foto del problema che vuoi segnalare!");
+      notifyWarning(
+        "Inserisci almeno una foto del problema che vuoi segnalare!"
+      );
       console.error(error);
     }
   };
 
   return (
-    <Container>
-      <Row>
-        <Col>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3">
-              <Form.Label htmlFor="reportType" className="title__reg">
-                Tipo della Segnalazione
-              </Form.Label>
-              <Form.Control
-                as="select"
-                id="reportType"
-                name="reportType"
-                value={report.reportType}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Seleziona il tipo d segnalazione</option>
-                {reportTypes.map((type, index) => (
-                  <option key={index} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label htmlFor="description" className="title__reg">
-                Descrivi il problema
-              </Form.Label>
-              <Form.Control
-                as="textarea"
-                id="description"
-                name="description"
-                value={report.description}
-                onChange={handleChange}
-                required
-              ></Form.Control>
-            </Form.Group>
-            <Col>
-              <div>
-                <Form.Label className="title__reg">
-                  Scegli la posizione sulla mappa
+    <>
+      <Container>
+        <Row>
+          <Col>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3">
+                <Form.Label htmlFor="reportType" className="title__reg">
+                  Tipo della Segnalazione
                 </Form.Label>
-                <Map onMapClick={handleMapClick} />
-              </div>
-            </Col>
-            <Form.Group>
-              <Form.Label htmlFor="latitude"></Form.Label>
-              <Form.Control
-                type="text"
-                id="latitude"
-                name="latitude"
-                value={report.latitude}
-                onChange={handleChange}
-                required
-                hidden
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label htmlFor="longitude"></Form.Label>
-              <Form.Control
-                type="text"
-                id="longitude"
-                name="longitude"
-                value={report.longitude}
-                onChange={handleChange}
-                required
-                hidden
-              />
-            </Form.Group>
-            <Form.Label htmlFor="reportType" className="title__reg">
-              Inserisci almeno una foto del problema
-            </Form.Label>
-            <Form.Group
-              className="mb-3"
-              onDrop={handleDrop}
-              onDragOver={handleDragOver}
-              style={{ border: "2px dashed #ccc", padding: "20px" }}
-            >
-              <Form.Label htmlFor="file"></Form.Label>
-              <Form.Control
-                type="file"
-                alt="img"
-                accept="image/*"
-                id="photos"
-                name="photos"
-                style={{ display: "none" }}
-                ref={fileInputRef}
-                multiple
-                onChange={handleFileInputChange}
-              />
-              <div
-                type="button"
-                onClick={handleSelectPhotosClick}
-                className="text-center"
-              >
-                <p>
-                  Seleziona Foto <FcStackOfPhotos />
-                </p>
-                <p className="fs-4">oppure</p>
-                <p>Trascina le foto qui</p>
-              </div>
-              {selectedFiles.map((file, index) => (
-                <div key={index}>
-                  <img
-                    src={URL.createObjectURL(file)}
-                    alt={`File ${index}`}
-                    style={{
-                      width: "100%",
-                      borderRadius: "20px",
-                    }}
-                  />
-                  <div>
-                    <p>{file.name}</p>
-                    <Button
-                      className="py-2"
-                      type="btn-secondary"
-                      onClick={() => handleDeletePhoto(index)}
-                    >
-                      Cancella foto
-                    </Button>
-                  </div>
+                <Form.Control
+                  as="select"
+                  id="reportType"
+                  name="reportType"
+                  value={report.reportType}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Seleziona il tipo d segnalazione</option>
+                  {reportTypes.map((type, index) => (
+                    <option key={index} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </Form.Control>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label htmlFor="description" className="title__reg">
+                  Descrivi il problema
+                </Form.Label>
+                <Form.Control
+                  as="textarea"
+                  id="description"
+                  name="description"
+                  value={report.description}
+                  onChange={handleChange}
+                  required
+                ></Form.Control>
+              </Form.Group>
+              <Col>
+                <div>
+                  <Form.Label className="title__reg">
+                    Scegli la posizione sulla mappa
+                  </Form.Label>
+                  <Map onMapClick={handleMapClick} />
                 </div>
-              ))}
-            </Form.Group>
-            <Button type="submit" className="btn btn-primary">
-              Invia
-            </Button>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
+              </Col>
+              <Form.Group>
+                <Form.Label htmlFor="latitude"></Form.Label>
+                <Form.Control
+                  type="text"
+                  id="latitude"
+                  name="latitude"
+                  value={report.latitude}
+                  onChange={handleChange}
+                  required
+                  hidden
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label htmlFor="longitude"></Form.Label>
+                <Form.Control
+                  type="text"
+                  id="longitude"
+                  name="longitude"
+                  value={report.longitude}
+                  onChange={handleChange}
+                  required
+                  hidden
+                />
+              </Form.Group>
+              <Form.Label htmlFor="reportType" className="title__reg">
+                Inserisci almeno una foto del problema
+              </Form.Label>
+              <Form.Group
+                className="mb-3"
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
+                style={{ border: "2px dashed #ccc", padding: "20px" }}
+              >
+                <Form.Label htmlFor="file"></Form.Label>
+                <Form.Control
+                  type="file"
+                  alt="img"
+                  accept="image/*"
+                  id="photos"
+                  name="photos"
+                  style={{ display: "none" }}
+                  ref={fileInputRef}
+                  multiple
+                  onChange={handleFileInputChange}
+                />
+                <div
+                  type="button"
+                  onClick={handleSelectPhotosClick}
+                  className="text-center"
+                >
+                  <p>
+                    Seleziona Foto <FcStackOfPhotos />
+                  </p>
+                  <p className="fs-4">oppure</p>
+                  <p>Trascina le foto qui</p>
+                </div>
+                {selectedFiles.map((file, index) => (
+                  <div key={index}>
+                    <img
+                      src={URL.createObjectURL(file)}
+                      alt={`File ${index}`}
+                      style={{
+                        width: "100%",
+                        borderRadius: "20px",
+                      }}
+                    />
+                    <div>
+                      <p>{file.name}</p>
+                      <Button
+                        className="py-2 btn btn-danger"
+                        type="button"
+                        onClick={() => handleDeletePhoto(index)}
+                      >
+                        Rimuovi foto
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </Form.Group>
+              <Button type="submit" className="btn btn-info w-100 fs-3">
+                Invia Segnalazione
+              </Button>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
+      <ToastContainer />
+    </>
   );
 };
 

@@ -4,9 +4,16 @@ import MyNavbar from "./MyNavbar";
 import MyAccordionComp from "./MyAccordionComp";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import waveDown from "../assets/imgs/waveHome.svg";
+import waveUp from "../assets/imgs/waveUp.svg";
+import page from "../assets/imgs/page.svg";
+import guide from "../assets/imgs/guideLines.svg";
+import { ToastContainer, toast } from "react-toastify";
+import { BsInstagram } from "react-icons/bs";
 
 const Report = () => {
   const [reports, setReports] = useState([]);
+  const [resp, setResp] = useState([]);
 
   const userData = {
     username: localStorage.getItem("user"),
@@ -17,6 +24,30 @@ const Report = () => {
 
   console.log(userData.accessToken);
   console.log(userData.username);
+
+  const notifyError = (text) =>
+    toast.error(`${text}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
+  const notifySucces = (text) =>
+    toast.success(`${text}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
 
   async function getReports() {
     try {
@@ -31,6 +62,7 @@ const Report = () => {
       );
       console.log(response);
       setReports(response.data);
+      setResp(response.status);
     } catch (error) {
       console.log("Error in get all reports!");
       console.error(error);
@@ -49,10 +81,10 @@ const Report = () => {
         config
       );
       console.log(response);
-      alert("Segnalazione cancellata con successo!");
+      notifySucces("Segnalazione cancellata con successo!");
       getReports();
     } catch (error) {
-      alert("Errore nella cancellazione!");
+      notifyError("Errore nella cancellazione!");
       console.log("Error in deleting report!");
       console.error(error);
     }
@@ -65,19 +97,105 @@ const Report = () => {
   return (
     <>
       <MyNavbar />
-      <Container className="my-5">
+      <img className="img-fluid mt-5" src={waveUp} alt="pic"></img>
+      <Container>
+        <Row className="d-flex justify-content-around align-items-center">
+          <Col xs={8} sm={10} md={6} lg={4} className="">
+            <div>
+              <img className="img-fluid my-5" src={page} alt="pic"></img>
+            </div>
+          </Col>
+          <Col xs={8} sm={10} md={6} lg={4} className="">
+            <div className="div__anim">
+              <h4>
+                <span className="title__reg">Ciao!</span> Qui troverai due
+                sezioni importanti
+              </h4>
+              <p className="fs-4">
+                Il form ti permette di fare le segnalazioni al tuo Comune,
+                mentre nella lista troverai le segnalazioni che hai già inviato.
+              </p>
+            </div>
+          </Col>
+        </Row>
+        <Row className="d-flex justify-content-around align-items-center">
+          <Col xs={8} sm={10} md={6} lg={4} className="my-5">
+            <div className="div__anim order-md-2">
+              <h4>
+                Ti invitiamo ad{" "}
+                <span className="title__reg">osservare alcune linee</span> guida
+                per un utilizzo responsabile della piattaforma:
+              </h4>
+              <p className="fs-4"></p>
+              <p>
+                Non ci sono limiti al numero di segnalazioni che puoi fare, ma
+                ti chiediamo di utilizzare il buon senso e{" "}
+                <span className="text-info">
+                  non inviare segnalazioni ripetitive
+                </span>
+                .
+              </p>
+              <p>
+                Ricorda che le segnalazioni sono un mezzo per migliorare la tua
+                comunità, quindi utilizzale{" "}
+                <span className="text-info">per problemi o situazioni</span> che
+                richiedono l'intervento delle{" "}
+                <span className="text-info">autorità locali</span>.
+              </p>
+              <p>
+                Assicurati di fornire{" "}
+                <span className="text-info">
+                  informazioni accurate e dettagliate
+                </span>{" "}
+                nelle tue segnalazioni, in modo che possano essere valutate e
+                risolte in modo efficace.
+              </p>
+              <p>
+                Mantieni un{" "}
+                <span className="text-info">tono rispettoso e cortese</span>{" "}
+                nelle comunicazioni con il Comune.
+              </p>
+              <p>
+                <span className="text-info">
+                  Rispetta la privacy e la riservatezza delle altre persone
+                </span>
+                . Evita di condividere informazioni personali sensibili nelle
+                tue segnalazioni.
+              </p>
+              {/* <p>
+                Se hai dubbi o domande sull'utilizzo dell'app, consulta la
+                sezione delle FAQ o contatta il supporto del Comune.
+              </p> */}
+            </div>
+          </Col>
+          <Col
+            xs={8}
+            sm={10}
+            md={6}
+            lg={4}
+            className="order-first order-md-last"
+          >
+            <div>
+              <img className="img-fluid my-5" src={guide} alt="pic"></img>
+            </div>
+          </Col>
+        </Row>
         <Row>
           <Col className="my-5">
-            <h2 className="text-center mb-4">Le tue Segnalazioni</h2>
-            {reports?.map((report, index) => (
-              <MyAccordionComp
-                key={report.id}
-                report={report}
-                index={index}
-                deleteReport={deleteReport}
-                role={userData.userRole}
-              />
-            ))}
+            <h2 className="text-center mb-4 mt-5">Le tue Segnalazioni</h2>
+            {resp === 500 ? (
+              <p>Nessuna segnalazione presente!</p>
+            ) : (
+              reports?.map((report, index) => (
+                <MyAccordionComp
+                  key={report.id}
+                  report={report}
+                  index={index}
+                  deleteReport={deleteReport}
+                  role={userData.userRole}
+                />
+              ))
+            )}
           </Col>
         </Row>
         <Row>
@@ -87,6 +205,8 @@ const Report = () => {
           </Col>
         </Row>
       </Container>
+      <img className="img-fluid" src={waveDown} alt="pic"></img>
+      <ToastContainer />
     </>
   );
 };

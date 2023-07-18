@@ -1,5 +1,6 @@
 import { Col, Container, Row } from "react-bootstrap";
 import MyNavbar from "./MyNavbar";
+import { Link } from "react-router-dom";
 import WHome from "../assets/imgs/welcomehome.svg";
 import signalHome from "../assets/imgs/signalHome.svg";
 import chooseHome from "../assets/imgs/chooseHome.svg";
@@ -25,7 +26,7 @@ const Home = () => {
               <h2>
                 Benvenuto in <span className="title__reg">ComuniCate</span>!
               </h2>
-              <p>
+              <p className="fs-4">
                 ComuniCate è un'applicazione che ti permette di comunicare
                 facilmente con la tua amministrazione comunale.
               </p>
@@ -42,16 +43,18 @@ const Home = () => {
             lg={4}
             className="order-last order-md-first"
           >
-            <div className="div__anim">
-              <h3>
-                Fai una <span className="title__reg">segnalazione</span>
-              </h3>
-              <p>
-                Hai notato un problema o un'inconveniente nel tuo quartiere? Fai
-                una segnalazione alla tua amministrazione comunale in pochi
-                semplici passaggi:
-              </p>
-            </div>
+            <Link to="/report" className="text-decoration-none">
+              <div className="div__anim">
+                <h3 className="text-info">
+                  <span className="title__reg">Fai una</span> Segnalazione
+                </h3>
+                <p className="text-black fs-4">
+                  Hai notato un problema o un'inconveniente nel tuo quartiere?
+                  Fai una segnalazione alla tua amministrazione comunale in
+                  pochi semplici passaggi:
+                </p>
+              </div>
+            </Link>
           </Col>
           <Col xs={8} sm={10} md={6} lg={4} className="">
             <div>
@@ -71,7 +74,7 @@ const Home = () => {
                 <span className="title__reg">Passo 1</span>: Scegli un tipo di
                 segnalazione
               </h4>
-              <p>
+              <p className="fs-4">
                 Seleziona il tipo di problema che vuoi segnalare, ad esempio
                 "Illuminazione pubblica" o "Rifiuti".
               </p>
@@ -91,7 +94,7 @@ const Home = () => {
                 <span className="title__reg">Passo 2</span>: Descrivi il
                 problema
               </h4>
-              <p>
+              <p className="fs-4">
                 Descrivi dettagliatamente il problema che hai riscontrato,
                 specificando luogo, orario, e qualsiasi altro dettaglio utile.
               </p>
@@ -119,7 +122,7 @@ const Home = () => {
                 <span className="title__reg">Passo 3</span>: Scegli una
                 posizione sulla mappa
               </h4>
-              <p>
+              <p className="fs-4">
                 Utilizza la mappa interattiva per indicare la posizione esatta
                 del problema. Puoi trascinare il segnaposto o fare clic sulla
                 mappa per impostare la posizione.
@@ -139,7 +142,7 @@ const Home = () => {
               <h4>
                 <span className="title__reg">Passo 4</span>: Carica le foto
               </h4>
-              <p>
+              <p className="fs-4">
                 Se disponi di foto del problema, puoi allegarle alla
                 segnalazione per fornire ulteriori dettagli visivi.
               </p>
@@ -160,7 +163,7 @@ const Home = () => {
           <Col xs={8} sm={10} md={6} lg={4} className="">
             <div className="div__anim">
               <h4 className="title__reg">Fatto!</h4>
-              <p>
+              <p className="fs-4">
                 Segnalare problemi al tuo comune non è mai stato più semplice di
                 cosi!
               </p>
