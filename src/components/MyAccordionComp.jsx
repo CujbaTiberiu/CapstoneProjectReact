@@ -18,6 +18,8 @@ const MyAccordionComp = ({
   index,
   role,
   modifyReport,
+  selectedUsername,
+  user,
 }) => {
   const [address, setAddress] = useState("");
   const [selectedReportStatus, setSelectedReportStatus] = useState(
@@ -27,6 +29,8 @@ const MyAccordionComp = ({
   const handleUpdateStatus = (newStatus) => {
     modifyReport(report.id, newStatus, report, selectedReportStatus);
   };
+
+  const userRole = localStorage.getItem("role");
 
   const reportStatus = [
     "RICEVUTA",
@@ -89,6 +93,10 @@ const MyAccordionComp = ({
         </Accordion.Header>
         <Container>
           <Accordion.Body className="fs-4">
+            <p>
+              <span className="text-primary">Utente</span> -{" "}
+              {userRole === "ROLE_ADMIN" ? selectedUsername : user}
+            </p>
             <p>
               <span className="text-primary">Tipo Segnalazione</span> -{" "}
               {report.reportType.replace(/_/g, " ")}

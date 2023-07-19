@@ -195,6 +195,7 @@ const Report = () => {
                   index={index}
                   deleteReport={deleteReport}
                   role={userData.userRole}
+                  user={userData.username}
                 />
               ))
             )}

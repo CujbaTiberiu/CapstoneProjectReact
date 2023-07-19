@@ -297,6 +297,7 @@ const AdminPage = () => {
                     index={index}
                     role={userData.userRole}
                     modifyReport={modifyReport}
+                    selectedUsername={selectedUsername}
                   />
                 ))}
               </Col>
