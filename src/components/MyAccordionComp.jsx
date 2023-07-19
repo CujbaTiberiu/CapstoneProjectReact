@@ -84,14 +84,29 @@ const MyAccordionComp = ({
   return (
     <Accordion className="my-2">
       <Accordion.Item eventKey="0">
-        <Accordion.Header>Segnalazione numero {index + 1}</Accordion.Header>
+        <Accordion.Header>
+          <span className="fs-4">Segnalazione numero {index + 1}</span>
+        </Accordion.Header>
         <Container>
-          <Accordion.Body>
-            <p>Tipo Segnalazione - {report.reportType}</p>
-            <p>Descrizione - {report.description}</p>
-            <p>Data - {report.date}</p>
-            <p>Indirizzo - {address}</p>
-            <p>Stato della Segnalazione - {report.status}</p>
+          <Accordion.Body className="fs-4">
+            <p>
+              <span className="text-primary">Tipo Segnalazione</span> -{" "}
+              {report.reportType.replace(/_/g, " ")}
+            </p>
+            <p>
+              <span className="text-primary">Descrizione</span> -{" "}
+              {report.description}
+            </p>
+            <p>
+              <span className="text-primary">Data</span> - {report.date}
+            </p>
+            <p>
+              <span className="text-primary">Indirizzo</span> - {address}
+            </p>
+            <p>
+              <span className="text-primary">Stato</span> -{" "}
+              {report.status.replace(/_/g, " ")}
+            </p>
             <Row>
               <p>Foto:</p>
               {report?.photos.map((photo) => (
@@ -136,7 +151,7 @@ const MyAccordionComp = ({
                     <option value="">{report.status}</option>
                     {reportStatus.map((status, index) => (
                       <option key={index} value={status}>
-                        {status}
+                        {status.replace(/_/g, " ")}
                       </option>
                     ))}
                   </Form.Control>

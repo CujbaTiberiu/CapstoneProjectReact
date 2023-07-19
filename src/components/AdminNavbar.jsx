@@ -29,7 +29,8 @@ const AdminNavbar = () => {
           <Container fluid>
             <Navbar.Brand href="/home">
               <img src={logo} alt="" style={{ width: "50px" }} />
-              ComuniCate - Ciao {username}! (Admin)
+              ComuniCate - Ciao <span className="text-info">{username}</span>!
+              (Admin)
             </Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas
@@ -39,7 +40,8 @@ const AdminNavbar = () => {
             >
               <Offcanvas.Header closeButton>
                 <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-                  ComuniCate - Ciao {username}! (Admin)
+                  ComuniCate - Ciao{" "}
+                  <span className="text-info">{username}</span>!
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>

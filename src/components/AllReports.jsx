@@ -7,6 +7,7 @@ import {
   Form,
   Carousel,
   Spinner,
+  Pagination,
 } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import AdminNavbar from "./AdminNavbar";
@@ -22,6 +23,8 @@ const AllReports = () => {
   const [currentReportIndex, setCurrentReportIndex] = useState(0);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const userData = {
     username: localStorage.getItem("user"),
@@ -66,6 +69,13 @@ const AllReports = () => {
           address.includes(address))
     );
   };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const paginatedReports = search(reports).slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
 
   const getAddress = async (latitude, longitude) => {
     try {
@@ -162,27 +172,27 @@ const AllReports = () => {
             <Row>
               <Col className="my-1">
                 <h2 className="text-primary">Segnalazioni</h2>
-                <Table striped bordered hover responsive>
-                  <thead>
+                <Table striped bordered hover responsive="sm">
+                  <thead className="fs-5">
                     <tr>
                       <th>#</th>
                       <th>Data</th>
                       <th>Descrizione</th>
                       <th>Indirizzo</th>
-                      <th>Tipo Segnalazione</th>
+                      <th>Tipo</th>
                       <th>Stato</th>
                       <th>Foto</th>
                     </tr>
                   </thead>
-                  {search(reports)?.map((report, reportIndex) => (
+                  {paginatedReports.map((report, reportIndex) => (
                     <tbody key={report.id}>
                       <tr>
                         <td>{reportIndex + 1}</td>
                         <td>{report.date}</td>
                         <td>{report.description}</td>
                         <td>{address[reportIndex]}</td>
-                        <td>{report.reportType}</td>
-                        <td>{report.status}</td>
+                        <td>{report.reportType.replace(/_/g, " ")}</td>
+                        <td>{report.status.replace(/_/g, " ")}</td>
                         <td>
                           {report.photos && report.photos.length > 0 ? (
                             <Button
@@ -203,6 +213,19 @@ const AllReports = () => {
                     </tbody>
                   ))}
                 </Table>
+                <Pagination className="d-flex justify-content-center align-items-center">
+                  {Array.from({
+                    length: Math.ceil(search(reports).length / itemsPerPage),
+                  }).map((item, index) => (
+                    <Pagination.Item
+                      key={index}
+                      active={index + 1 === currentPage}
+                      onClick={() => setCurrentPage(index + 1)}
+                    >
+                      {index + 1}
+                    </Pagination.Item>
+                  ))}
+                </Pagination>
               </Col>
             </Row>
             {showCarousel && (

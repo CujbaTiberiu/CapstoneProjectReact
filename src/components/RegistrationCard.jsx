@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 const RegistrationCard = () => {
   return (
     <Card>
-      <Card.Img variant="top" src={logo} />
+      <Card.Img variant="top h-75 w-75" src={logo} />
       <Card.Body>
         <Card.Title>
-          Benvenuto su <span className="text-primary fs-3">Comunicate</span>
+          Benvenuto su <span className="text-primary fs-3">ComuniCate</span>
         </Card.Title>
         <Card.Text className="fs-5">
           La piattaforma semplice e compatta che ti permette di comunicare in

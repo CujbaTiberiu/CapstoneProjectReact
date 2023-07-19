@@ -16,7 +16,7 @@ const Home = () => {
       <MyNavbar />
       <Container fluid className="bg-secondary mt-5">
         <Row className="d-flex justify-content-around align-items-center">
-          <Col xs={8} sm={10} md={6} lg={4} className="">
+          <Col xs={8} sm={10} md={6} lg={4} className="mt-sm-5">
             <div>
               <img className="img-fluid my-5" src={WHome} alt="pic"></img>
             </div>

@@ -10,11 +10,15 @@ const FirstPage = () => {
       <div className="particle__back">
         <Particle />
       </div>
-      <Container className="my-5 flex-lg-column">
+      <Container className="flex-lg-column">
         <Row className="d-flex justify-content-center align-items-center">
           <Col xs={10} sm={10} md={10} lg={4} xl={4} className="order-lg-1">
             <div>
-              <img className="img-fluid my-3" src={WelcomeImg} alt="pic"></img>
+              <img
+                className="img-fluid my-sm-3"
+                src={WelcomeImg}
+                alt="pic"
+              ></img>
             </div>
           </Col>
           <Col
@@ -23,7 +27,7 @@ const FirstPage = () => {
             md={10}
             lg={4}
             xl={4}
-            className="order-lg-3 my-5 d-flex justify-content-around"
+            className="order-lg-3 d-flex justify-content-around mb-sm-2 mt-2"
           >
             <RegistrationCard />
           </Col>

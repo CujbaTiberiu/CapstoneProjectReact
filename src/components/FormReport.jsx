@@ -213,7 +213,7 @@ const FormReport = ({ getReports }) => {
                   <option value="">Seleziona il tipo d segnalazione</option>
                   {reportTypes.map((type, index) => (
                     <option key={index} value={type}>
-                      {type}
+                      {type.replace(/_/g, " ")}
                     </option>
                   ))}
                 </Form.Control>

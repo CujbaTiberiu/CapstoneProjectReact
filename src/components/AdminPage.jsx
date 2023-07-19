@@ -7,6 +7,7 @@ import {
   Table,
   Form,
   Spinner,
+  Pagination,
 } from "react-bootstrap";
 import axios from "axios";
 import MyAccordionComp from "./MyAccordionComp";
@@ -21,6 +22,8 @@ const AdminPage = () => {
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [selectedUsername, setSelectedUsername] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const search = (data) => {
     // const keys = [
@@ -51,6 +54,10 @@ const AdminPage = () => {
     tokenType: localStorage.getItem("tokenType"),
     userRole: localStorage.getItem("role"),
   };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const paginatedUsers = search(users).slice(indexOfFirstItem, indexOfLastItem);
 
   //notify - allerts
   const notifyError = (utente) =>
@@ -226,8 +233,8 @@ const AdminPage = () => {
             <Row>
               <Col className="my-1">
                 <h2 className="text-primary">Utenti</h2>
-                <Table striped bordered hover responsive>
-                  <thead>
+                <Table striped bordered hover responsive="sm">
+                  <thead className="fs-5">
                     <tr>
                       <th>#</th>
                       <th>Nome</th>
@@ -239,7 +246,7 @@ const AdminPage = () => {
                       <th>Segnalazioni</th>
                     </tr>
                   </thead>
-                  {search(users).map((user, index) => (
+                  {paginatedUsers.map((user, index) => (
                     <tbody key={user.id}>
                       <tr>
                         <td>{index + 1}</td>
@@ -248,7 +255,7 @@ const AdminPage = () => {
                         <td>{user.username}</td>
                         <td>{user.email}</td>
                         <td>{user.taxCode}</td>
-                        <td>{user.roles[0].roleName}</td>
+                        <td>{user.roles[0].roleName.replace("ROLE_", "")}</td>
                         <td>
                           <Button
                             className="py-2"
@@ -266,6 +273,19 @@ const AdminPage = () => {
                     </tbody>
                   ))}
                 </Table>
+                <Pagination className="d-flex justify-content-center align-items-center">
+                  {Array.from({
+                    length: Math.ceil(search(users).length / itemsPerPage),
+                  }).map((item, index) => (
+                    <Pagination.Item
+                      key={index}
+                      active={index + 1 === currentPage}
+                      onClick={() => setCurrentPage(index + 1)}
+                    >
+                      {index + 1}
+                    </Pagination.Item>
+                  ))}
+                </Pagination>
               </Col>
             </Row>
             <Row>

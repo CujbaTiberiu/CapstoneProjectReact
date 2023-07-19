@@ -182,7 +182,9 @@ const Report = () => {
         </Row>
         <Row>
           <Col className="my-5">
-            <h2 className="text-center mb-4 mt-5">Le tue Segnalazioni</h2>
+            <h2 className="text-center mb-4 mt-5">
+              Le tue <span className="text-info">Segnalazioni</span>
+            </h2>
             {resp === 500 ? (
               <p>Nessuna segnalazione presente!</p>
             ) : (
@@ -200,7 +202,9 @@ const Report = () => {
         </Row>
         <Row>
           <Col className="my-5">
-            <h2 className="text-center mb-4">Fai una Segnalazione</h2>
+            <h2 className="text-center mb-4">
+              Fai una <span className="text-info">Segnalazione</span>
+            </h2>
             <FormReport getReports={getReports} />
           </Col>
         </Row>
