@@ -10,7 +10,7 @@ const FirstPage = () => {
       <div className="particle__back">
         <Particle />
       </div>
-      <Container className="flex-lg-column">
+      <Container className="flex-lg-column mt-5 mb-sm-4">
         <Row className="d-flex justify-content-center align-items-center">
           <Col xs={10} sm={10} md={10} lg={4} xl={4} className="order-lg-1">
             <div>
