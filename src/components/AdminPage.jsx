@@ -163,6 +163,11 @@ const AdminPage = () => {
 
   async function modifyReport(id, newStatus, report, selectedStatus) {
     try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userData.accessToken}`,
+        },
+      };
       const formData = new FormData();
       formData.append("reportType", report.reportType);
       formData.append("description", report.description);
@@ -179,13 +184,13 @@ const AdminPage = () => {
 
       const response = await axios.put(
         `http://localhost:8080/api/report/${id}/${selectedUserId}`,
-        formData
+        formData,
+        config
       );
       notifySucces("Aggiornamento dello stato avvenuta con successo!");
       notifyInfo(
         `Premi nuovamente 'Aggiorna Status' per chiudere la casella di conferma!`
       );
-      //getAllUsers();
       console.log(response);
       console.log("id user attuale" + selectedUserId);
     } catch (error) {
@@ -224,7 +229,7 @@ const AdminPage = () => {
                     <Form.Control
                       type="text"
                       placeholder="cerca.."
-                      onChange={(e) => setQuery(e.target.value)}
+                      onChange={(e) => setQuery(e.target.value.toLowerCase())}
                     />
                   </Form.Group>
                 </Form>

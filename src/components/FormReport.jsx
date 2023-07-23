@@ -7,6 +7,8 @@ import axios from "axios";
 import { FcStackOfPhotos } from "react-icons/fc";
 import Map from "./Map";
 import { ToastContainer, toast } from "react-toastify";
+import { RiMailSendLine } from "react-icons/ri";
+import { MdOutlineDeleteForever } from "react-icons/md";
 
 const reportTypes = [
   "STRADA",
@@ -308,18 +310,21 @@ const FormReport = ({ getReports }) => {
                     <div>
                       <p>{file.name}</p>
                       <Button
-                        className="py-2 btn btn-danger"
+                        className="py-2 btn btn-danger reg__anim"
                         type="button"
                         onClick={() => handleDeletePhoto(index)}
                       >
-                        Rimuovi foto
+                        Rimuovi foto <MdOutlineDeleteForever />
                       </Button>
                     </div>
                   </div>
                 ))}
               </Form.Group>
-              <Button type="submit" className="btn btn-info w-100 fs-3">
-                Invia Segnalazione
+              <Button
+                type="submit"
+                className="btn btn-info w-100 fs-3 reg__anim"
+              >
+                Invia Segnalazione <RiMailSendLine />
               </Button>
             </Form>
           </Col>

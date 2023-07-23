@@ -11,6 +11,8 @@ import {
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import axios from "axios";
+import { MdOutlineDeleteForever } from "react-icons/md";
+import { MdSystemUpdateAlt } from "react-icons/md";
 
 const MyAccordionComp = ({
   report,
@@ -138,13 +140,13 @@ const MyAccordionComp = ({
                 placement="right"
                 overlay={popoverDelete}
               >
-                <Button variant="outline-danger" className="my-2">
-                  Cancella
+                <Button variant="outline-danger" className="my-2 reg__anim">
+                  Cancella <MdOutlineDeleteForever />
                 </Button>
               </OverlayTrigger>
             ) : (
               <div>
-                <Form.Group className="mb-3">
+                <Form.Group className="my-3">
                   <Form.Label htmlFor="reportStatus" className="title__reg">
                     Stato della Segnalazione
                   </Form.Label>
@@ -156,7 +158,7 @@ const MyAccordionComp = ({
                     onChange={(e) => setSelectedReportStatus(e.target.value)}
                     required
                   >
-                    <option value="">{report.status}</option>
+                    <option value=""></option>
                     {reportStatus.map((status, index) => (
                       <option key={index} value={status}>
                         {status.replace(/_/g, " ")}
@@ -169,8 +171,8 @@ const MyAccordionComp = ({
                   placement="right"
                   overlay={popoverModify}
                 >
-                  <Button variant="outline-primary" className="my-2">
-                    Aggiorna Status
+                  <Button variant="outline-primary" className="my-2 reg__anim">
+                    Aggiorna Status <MdSystemUpdateAlt />
                   </Button>
                 </OverlayTrigger>
               </div>

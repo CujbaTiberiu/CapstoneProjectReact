@@ -28,7 +28,12 @@ const AdminNavbar = () => {
         >
           <Container fluid>
             <Navbar.Brand href="/home">
-              <img src={logo} alt="" style={{ width: "50px" }} />
+              <img
+                className="icon__anim"
+                src={logo}
+                alt="logo"
+                style={{ width: "50px" }}
+              />
               ComuniCate - Ciao <span className="text-info">{username}</span>!
               (Admin)
             </Navbar.Brand>
@@ -48,19 +53,19 @@ const AdminNavbar = () => {
                 <Nav className="justify-content-end flex-grow-1 pe-3">
                   <Link
                     to="/admin"
-                    className="text-decoration-none text-primary nav-link d-flex align-items-center"
+                    className="text-decoration-none text-primary nav-link d-flex align-items-center icon__anim"
                   >
                     <TbUsersGroup className="fs-3" /> Utenti
                   </Link>
                   <Link
                     to="/reports"
-                    className="text-decoration-none text-info nav-link d-flex align-items-center"
+                    className="text-decoration-none text-info nav-link d-flex align-items-center icon__anim"
                   >
                     <TbReportSearch className="fs-3" /> Segnalazioni
                   </Link>
                   <Nav.Link
                     onClick={handleLogOut}
-                    className="d-flex align-items-center"
+                    className="d-flex align-items-center icon__anim"
                   >
                     <MdLogout className="fs-3" /> Logout
                   </Nav.Link>

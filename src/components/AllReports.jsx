@@ -18,13 +18,14 @@ import Particle from "./Particle";
 const AllReports = () => {
   const [query, setQuery] = useState("");
   const [reports, setReports] = useState([]);
-  const [address, setAddress] = useState([]);
   const [showCarousel, setShowCarousel] = useState(false);
   const [currentReportIndex, setCurrentReportIndex] = useState(0);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [reportAddresses, setReportAddresses] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+  const [totalReportsShown, setTotalReportsShown] = useState(0);
 
   const userData = {
     username: localStorage.getItem("user"),
@@ -77,7 +78,7 @@ const AllReports = () => {
     indexOfLastItem
   );
 
-  const getAddress = async (latitude, longitude) => {
+  const getAddress = async (reportId, latitude, longitude) => {
     try {
       const response = await axios.get(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyClytQp1USp5keyCvaSk_V4h7vcThzE3UU`
@@ -85,7 +86,10 @@ const AllReports = () => {
 
       if (response.data.results.length > 0) {
         const formattedAddress = response.data.results[0].formatted_address;
-        setAddress((prevAddress) => [...prevAddress, formattedAddress]);
+        setReportAddresses((prevAddresses) => ({
+          ...prevAddresses,
+          [reportId]: formattedAddress,
+        }));
       }
     } catch (error) {
       console.error(error);
@@ -108,7 +112,9 @@ const AllReports = () => {
       const updatedReports = await Promise.all(
         response.data.map(async (report) => {
           if (report.latitude && report.longitude) {
-            const address = await getAddress(report.latitude, report.longitude);
+            const address =
+              reportAddresses[report.id] ||
+              (await getAddress(report.id, report.latitude, report.longitude));
             return { ...report, address };
           } else {
             return report;
@@ -116,11 +122,6 @@ const AllReports = () => {
         })
       );
       setReports(updatedReports);
-
-      // const firstReport = response.data[0];
-      // if (firstReport?.latitude && firstReport?.longitude) {
-      //   getAddress(firstReport.latitude, firstReport.longitude);
-      // }
     } catch (error) {
       console.log("Error in get all users!");
       console.error(error);
@@ -133,10 +134,17 @@ const AllReports = () => {
   }, []);
 
   const handleShowCarousel = (reportIndex, photoIndex) => {
-    setCurrentReportIndex(reportIndex);
+    const actualReportIndex = totalReportsShown + reportIndex;
+    setCurrentReportIndex(actualReportIndex);
     setCurrentPhotoIndex(photoIndex);
     setShowCarousel(true);
   };
+
+  useEffect(() => {
+    // Calcoliamo il numero totale di report mostrati fino alla pagina corrente
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    setTotalReportsShown(startIndex);
+  }, [currentPage]);
 
   return (
     <>
@@ -163,7 +171,7 @@ const AllReports = () => {
                     <Form.Control
                       type="text"
                       placeholder="cerca.."
-                      onChange={(e) => setQuery(e.target.value)}
+                      onChange={(e) => setQuery(e.target.value.toLowerCase())}
                     />
                   </Form.Group>
                 </Form>
@@ -190,7 +198,7 @@ const AllReports = () => {
                         <td>{reportIndex + 1}</td>
                         <td>{report.date}</td>
                         <td>{report.description}</td>
-                        <td>{address[reportIndex]}</td>
+                        <td>{reportAddresses[report.id]}</td>
                         <td>{report.reportType.replace(/_/g, " ")}</td>
                         <td>{report.status.replace(/_/g, " ")}</td>
                         <td>

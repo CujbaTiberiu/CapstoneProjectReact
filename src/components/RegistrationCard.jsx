@@ -17,12 +17,12 @@ const RegistrationCard = () => {
         </Card.Text>
       </Card.Body>
       <ListGroup className="list-group-flush">
-        <Link to="/registration" className="text-decoration-none div__anim">
+        <Link to="/registration" className="text-decoration-none reg__anim">
           <ListGroup.Item>
             <span className="text-primary fs-5">Step 1</span> - Registrati
           </ListGroup.Item>
         </Link>
-        <Link to="/login" className="text-decoration-none div__anim">
+        <Link to="/login" className="text-decoration-none reg__anim">
           <ListGroup.Item>
             <span className="text-primary fs-5">Step 2</span> - Fai il login
           </ListGroup.Item>

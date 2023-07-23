@@ -9,7 +9,6 @@ import waveUp from "../assets/imgs/waveUp.svg";
 import page from "../assets/imgs/page.svg";
 import guide from "../assets/imgs/guideLines.svg";
 import { ToastContainer, toast } from "react-toastify";
-import { BsInstagram } from "react-icons/bs";
 
 const Report = () => {
   const [reports, setReports] = useState([]);
@@ -162,10 +161,6 @@ const Report = () => {
                 . Evita di condividere informazioni personali sensibili nelle
                 tue segnalazioni.
               </p>
-              {/* <p>
-                Se hai dubbi o domande sull'utilizzo dell'app, consulta la
-                sezione delle FAQ o contatta il supporto del Comune.
-              </p> */}
             </div>
           </Col>
           <Col

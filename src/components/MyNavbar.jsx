@@ -28,7 +28,12 @@ const MyNavbar = () => {
         >
           <Container fluid>
             <Navbar.Brand href="/home">
-              <img src={logo} alt="" style={{ width: "50px" }} />
+              <img
+                className="icon__anim"
+                src={logo}
+                alt=""
+                style={{ width: "50px" }}
+              />
               ComuniCate - Ciao{" "}
               <span className="text-primary fs-4">{username}</span>!
             </Navbar.Brand>
@@ -48,19 +53,19 @@ const MyNavbar = () => {
                 <Nav className="justify-content-end flex-grow-1 pe-3">
                   <Link
                     to="/home"
-                    className="text-decoration-none text-primary nav-link d-flex align-items-center"
+                    className="text-decoration-none text-primary nav-link d-flex align-items-center icon__anim"
                   >
                     <BiHomeSmile className="fs-3" /> Home
                   </Link>
                   <Link
                     to="/report"
-                    className="text-decoration-none text-info nav-link d-flex align-items-center"
+                    className="text-decoration-none text-info nav-link d-flex align-items-center icon__anim"
                   >
                     <MdOutgoingMail className="fs-3" /> Segnalazioni
                   </Link>
                   <Nav.Link
                     onClick={handleLogOut}
-                    className="d-flex align-items-center"
+                    className="d-flex align-items-center icon__anim"
                   >
                     <MdLogout className="fs-3" /> Logout
                   </Nav.Link>
